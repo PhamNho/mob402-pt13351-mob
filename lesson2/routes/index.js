@@ -46,4 +46,8 @@ router.post('/save-add', function(req, res, next) {
   res.render('result', {username: username, gender: gender});
 });
 
+router.get('/products/add', function(req, res, next){
+  res.render('products/add-form');
+});
+
 module.exports = router;
