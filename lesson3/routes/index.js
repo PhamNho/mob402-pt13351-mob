@@ -5,8 +5,7 @@ var Category = require('../models/category');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Category.find({}, function(err, data){
-    console.log(data);
-    res.send('ok');
+    res.render('category/index', {categories: data});
   })
 });
 
