@@ -32,4 +32,10 @@ router.post('/cates/save-add', function(req, res, next){
   res.redirect('/');
 });
 
+router.get('/cates/remove/:cateId', function(req, res, next){
+  Category.deleteOne({_id: req.params.cateId}, function(err){
+    res.redirect('/');
+  });
+});
+
 module.exports = router;
