@@ -1,19 +1,24 @@
 <table>
     <thead>
-        <th>ID</th>
         <th>Name</th>
         <th>Image</th>
-        <th>Description</th>
+        <th width="500">Description</th>
+        <th>
+            <a href="/cates/add">Thêm danh mục</a>
+        </th>
     </thead>
     <tbody>
         {{#each categories}}
             <tr>
-                <td>{{this._id}}</td>
                 <td>{{this.name}}</td>
                 <td>
                     <img src="{{this.image}}" width="100">
                 </td>
                 <td>{{this.description}}</td>
+                <td>
+                    <a href="/cates/edit/{{this._id}}">Sửa</a>
+                    <a href="/cates/remove/{{this._id}}">Xóa</a>
+                </td>
             </tr>
         {{/each}}
     </tbody>
