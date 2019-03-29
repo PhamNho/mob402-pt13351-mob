@@ -19,6 +19,20 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+// add custom handlebar helper
+var hbs = require('hbs');
+hbs.registerHelper('select_options', function(arr, selectname, selectedValue) { 
+  let displayStr = `<select class="form-control" name="${selectname}">`;
+  for(let i = 0; i < arr.length; i++){
+    displayStr += `<option value="${arr[i]._id}"`;
+    if(arr[i]._id == selectedValue){
+      displayStr += `selected `;
+    }
+    displayStr += `>${arr[i].name}</option>`;
+  }
+  displayStr += `</select>`;
+  return displayStr;
+});
 
 
 // view engine setup
