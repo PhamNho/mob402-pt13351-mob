@@ -49,6 +49,44 @@ router.post('/cates/save-add', upload.single('image'),function(req, res, next){
   });
 });
 
+router.get('/cates/edit/:cId', function(req, res, next){
+
+  var cId = req.params.cId;
+
+  Category.findOne({_id: cId}, function(err, data){
+    if(err){
+      res.send('id khong ton tai');
+    }
+
+    res.render('category/edit-form', {cate: data});
+  });
+});
+
+router.post('/cates/save-edit', upload.single('image'), function(req, res, next){
+  
+  // neu khong upload anh => req.file == null
+  let {id, name, description} = req.body;
+  Category.findOne({_id: id}, function(err, model){
+    if(err){
+      res.send('Id khong ton tai');
+    }
+
+    model.name = name;
+    model.description = description;
+    if(req.file != null){
+      model.image = req.file.path.replace('public', '');
+    }
+    model.save(function(err){
+      if(err){
+        res.send('cap nhat khong thanh cong');
+      }
+
+      res.redirect('/');
+    })
+  })
+
+});
+
 router.get('/cates/remove/:cateId', function(req, res, next){
   Category.deleteOne({_id: req.params.cateId}, function(err){
     res.redirect('/');
