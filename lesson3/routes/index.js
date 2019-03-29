@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
+var shortid = require('shortid');
+
 var storage = multer.diskStorage({
   // nơi lưu trữ ảnh đc upload lên server
   destination: function(req, file, cb){
@@ -8,7 +10,7 @@ var storage = multer.diskStorage({
   },
   // quy định tên file đc upload lên
   filename: function(req, file, cb){
-    cb(null, file.originalname);
+    cb(null, shortid.generate() + "-" + file.originalname);
   }
 });
 var upload = multer({storage: storage});
@@ -30,21 +32,21 @@ router.get('/cates/add', function(req, res, next){
 router.post('/cates/save-add', upload.single('image'),function(req, res, next){
   // thu thập dữ liệu từ form
   let {name, description} = req.body;
-  res.json(req.file);
+  // res.json(req.file);
   
   // tạo ra đối tượng mới dạng Category
-  // let model = new Category();
+  let model = new Category();
 
-  // // Cập nhật lại thông tin đối tượng vừa tạo với dữ liệu thu thập được từ form
-  // model.name = name;
-  // model.image = image;
-  // model.description = description;
+  // Cập nhật lại thông tin đối tượng vừa tạo với dữ liệu thu thập được từ form
+  model.name = name;
+  model.image = req.file.path.replace('public', '');
+  model.description = description;
 
-  // // Lưu đối tượng với csdl
-  // model.save();
-
-  // // điều hướng website về danh sách danh mục
-  // res.redirect('/');
+  // Lưu đối tượng với csdl
+  model.save(function(err){
+    // điều hướng website về danh sách danh mục
+    res.redirect('/');
+  });
 });
 
 router.get('/cates/remove/:cateId', function(req, res, next){
