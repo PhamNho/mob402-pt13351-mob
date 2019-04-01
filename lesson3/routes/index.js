@@ -16,13 +16,17 @@ var storage = multer.diskStorage({
 var upload = multer({storage: storage});
 
 var Category = require('../models/category');
+var Product = require('../models/product');
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  Category.find({}, function(err, data){
-    res.render('category/index', {categories: data});
-  })
+  Category.find({})
+          .populate('products.product_id')
+          .exec(function(err, data){
+            res.json(data);
+            // res.render('category/index', {categories: data});
+          })
 });
 
 router.get('/cates/add', function(req, res, next){
@@ -92,5 +96,14 @@ router.get('/cates/remove/:cateId', function(req, res, next){
     res.redirect('/');
   });
 });
+
+router.get('/products', function(req, res, next){
+  Product.find({})
+          .populate('category')
+          .exec(function(err, data){
+            // res.json(data);
+            res.render("product/index", {products: data});
+          });
+})
 
 module.exports = router;

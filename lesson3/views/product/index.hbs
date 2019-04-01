@@ -1,0 +1,30 @@
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Category Name</th>
+        <th>Price</th>
+        <th width="300">Detail</th>
+        <th>
+            <a href="/products/add">Them</a>
+        </th>
+    </thead>
+    <tbody>
+        {{#each products}}
+            <tr>
+                <td>{{this.name}}</td>
+                <td>
+                    <img src="{{this.image}}" width="100">
+                </td>
+                <td>{{this.category.name}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.detail}}</td>
+                <td>
+                    <a href="/products/edit/{{this._id}}">Sửa</a>
+                    <a href="/products/remove/{{this._id}}">Xóa</a>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
