@@ -19,10 +19,18 @@
                 <td>{{this.description}}</td>
                 <td>
                     <a href="/cates/edit/{{this._id}}">Sửa</a>
-                    <a href="/cates/remove/{{this._id}}">Xóa</a>
+                    <a href="javascript:;" onclick="confirmDelete('{{this.name}}', '/cates/remove/{{this._id}}');">Xóa</a>
                 </td>
             </tr>
         {{/each}}
     </tbody>
 </table>
+<script>
 
+    function confirmDelete(catename, url){
+        var conf = confirm(`Bạn có chắc chắn muốn xóa danh mục ${catename} hay không?`);
+        if(conf == true){
+            window.location.href = url;
+        }
+    }
+</script>

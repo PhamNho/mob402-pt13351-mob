@@ -24,9 +24,14 @@ router.get('/', function(req, res, next) {
   Category.find({})
           .populate('products.product_id')
           .exec(function(err, data){
-            res.json(data);
-            // res.render('category/index', {categories: data});
+            // res.json(data);
+            res.render('category/index', {categories: data});
           })
+  // Category.findOne({_id: '5c98695def243bd2b7b3654b'})
+  //         .populate('products')
+  //         .exec(function(err, data){
+  //           res.json(data);
+  //         })
 });
 
 router.get('/cates/add', function(req, res, next){
